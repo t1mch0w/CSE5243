@@ -2,6 +2,8 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.tokenize import wordpunct_tokenize
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist
+from nltk.stem.snowball import SnowballStemmer
+from nltk.stem.porter import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Reuter:
@@ -17,13 +19,18 @@ class Reuter:
 		self.ntlk=[]
 
 		tokenizer = RegexpTokenizer(r'\w+')
+		#stemmer = SnowballStemmer("english")
+		stemmer = PorterStemmer()
+
 		stop = stopwords.words('english')
 		for r in tokenizer.tokenize(data):
 			a=0
 			if r not in stop:
 				if not any(i.isdigit() for i in r):
-					self.ntlk.append(r)
-					self.text=self.text+' '+r
+					r = stemmer.stem(r)
+					if r not in self.ntlk:
+						self.ntlk.append(r)
+						self.text=self.text+' '+r
 
 	def getTfidf(self):
 		for tmpstr in self.tfidfatt:

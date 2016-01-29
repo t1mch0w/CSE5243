@@ -3,6 +3,7 @@ from cleaner import *
 from parser import *
 from optparse import OptionParser
 
+import numpy as np
 import sys
 
 class Vector:
@@ -14,7 +15,7 @@ class Vector:
 	def __init__(self,data):
 		self.data=data.lower()
 
-	def compute(self):
+	def compute(self, n):
 		for r in self.reulist:
 			self.textlist.append(r.text)
 			self.wholetext+=' '+r.text
@@ -22,11 +23,13 @@ class Vector:
 		# TF-IDF
 		tf = TfidfVectorizer(analyzer='word', ngram_range=(1,1), min_df = 1)
 		tfidf_matrix =  tf.fit_transform(self.textlist)
-		feature_names = tf.get_feature_names()[:100]
+		feature_array = np.array(tf.get_feature_names())
+		tfidf_sorting = np.argsort(tfidf_matrix.toarray()).flatten()[::-1]
+		feature_names = feature_array[tfidf_sorting][:n]
 
 		# Frequency
 		fdist = FreqDist(self.wholetext.split())
-		fremap=fdist.most_common(100)
+		fremap=fdist.most_common(n)
 
 		for r in self.reulist:
 			r.tfidfatt=feature_names
@@ -62,7 +65,7 @@ def main():
 	parser=Parser()
 	parser.parse(vector)
 
-	vector.compute()
+	vector.compute(100)
 	vector.writeout(tfidffile, frefile)
 
 if __name__ == "__main__":
