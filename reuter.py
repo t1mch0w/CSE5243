@@ -19,8 +19,9 @@ class Reuter:
 		tokenizer = RegexpTokenizer(r'\w+')
 		stop = stopwords.words('english')
 		for r in tokenizer.tokenize(data):
+			a=0
 			if r not in stop:
-				if not r.isdigit():
+				if not any(i.isdigit() for i in r):
 					self.ntlk.append(r)
 					self.text=self.text+' '+r
 
@@ -42,3 +43,31 @@ class Reuter:
 					tmpcount=tmpcount+1
 			self.freval.append(tmpcount)
 
+	def frestr(self):
+		string=self.newid+'\t'+self.oldid+'\t'
+		for r in self.freatt:
+			r=str(r)
+			r=r.encode('ascii','ignore')
+			string+=r+'\t'
+		string+='\n'
+		for r in self.freval:
+			r=str(r)
+			r=r.encode('ascii','ignore')
+			string+=r+'\t'
+		string+='\n'
+		return string
+
+
+	def tfidfstr(self):
+		string=self.newid+'\t'+self.oldid+'\t'
+		for r in self.tfidfatt:
+			r=str(r)
+			r=r.encode('ascii','ignore')
+			string+=r+'\t'
+		string+='\n'
+		for r in self.tfidfval:
+			r=str(r)
+			r=r.encode('ascii','ignore')
+			string+=r+'\t'
+		string+='\n'
+		return string

@@ -1,6 +1,8 @@
 from reuter import *
 from cleaner import *
 from parser import *
+from optparse import OptionParser
+
 import sys
 
 class Vector:
@@ -34,16 +36,23 @@ class Vector:
 				r.freatt.append(tmp[0])
 			r.getFre()
 
-	def writeout(self):
+	def writeout(self, tfidfile, frefile):
+		tf = open(tfidfile, 'w')
+		ff = open(frefile, 'w')
 		for r in self.reulist:
-			print r.tfidfatt
-			print r.tfidfval
-			print r.freatt
-			print r.freval
+			tf.write(r.tfidfstr())
+		for r in self.reulist:
+			ff.write(r.frestr())
 
 def main():
+	if len(sys.argv)!=3:
+		print 'Please use following format to run the program:\n'+'python ./vector $INPUT_FILE $OUTPUT_FILE'
+		return
 	with open(sys.argv[1], 'r') as f:
 		data=f.read()
+	
+	tfidffile=sys.argv[2]+'.vc1'
+	frefile=sys.argv[2]+'.vc2'
 
 	vector=Vector(data)	
 
@@ -54,7 +63,7 @@ def main():
 	parser.parse(vector)
 
 	vector.compute()
-	vector.writeout()
+	vector.writeout(tfidffile, frefile)
 
 if __name__ == "__main__":
 	main()
