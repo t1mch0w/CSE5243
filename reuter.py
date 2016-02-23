@@ -4,10 +4,9 @@ from nltk.corpus import stopwords
 from nltk.probability import FreqDist
 from nltk.stem.snowball import SnowballStemmer
 from nltk.stem.porter import *
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Reuter:
-	def __init__(self, newid, oldid, data):
+	def __init__(self, oldid, newid, data, general):
 		self.newid=newid
 		self.oldid=oldid
 		self.data=data
@@ -17,6 +16,8 @@ class Reuter:
 		self.freval=[]
 		self.text=''
 		self.ntlk=[]
+		self.idfvalue=[]
+		self.general=general
 
 		tokenizer = RegexpTokenizer(r'\w+')
 		#stemmer = SnowballStemmer("english")
@@ -32,31 +33,26 @@ class Reuter:
 						self.ntlk.append(r)
 						self.text=self.text+' '+r
 
-	def getTfidf(self):
-		for tmpstr in self.tfidfatt:
-			tmpstr=tmpstr.encode('ascii','ignore')
-			tmpcount=0
-			for word in self.ntlk:
-				if (tmpstr==word):
-					tmpcount=tmpcount+1
-			self.tfidfval.append(tmpcount)
+	def getTfidf(self, idflist):
+		for index,word in enumerate(self.tfidfatt,start=0):
+			#word=word.encode('ascii','ignore')
+			below = len(self.ntlk)
+			if below==0:
+				self.tfidfval.append(0)
+			else:
+				above = self.ntlk.count(word)
+				tf = float(above)/below
+				idf = idflist[index]
+				self.tfidfval.append(float(tf*idf))
 
 	def getFre(self):
 		for tmpstr in self.freatt:
 			tmpstr=tmpstr.encode('ascii','ignore')
-			tmpcount=0
-			for word in self.ntlk:
-				if (tmpstr==word):
-					tmpcount=tmpcount+1
+			tmpcount=self.ntlk.count(tmpstr)
 			self.freval.append(tmpcount)
 
 	def frestr(self):
 		string=self.newid+'\t'+self.oldid+'\t'
-		for r in self.freatt:
-			r=str(r)
-			r=r.encode('ascii','ignore')
-			string+=r+'\t'
-		string+='\n'
 		for r in self.freval:
 			r=str(r)
 			r=r.encode('ascii','ignore')
@@ -64,17 +60,45 @@ class Reuter:
 		string+='\n'
 		return string
 
+	def freattstr(self):
+		string='newid\toldid\t'
+		for r in self.freatt:
+			r=str(r)
+			r=r.encode('ascii','ignore')
+			string+=r+'\t'
+		string+='\n'
+		return string
 
 	def tfidfstr(self):
 		string=self.newid+'\t'+self.oldid+'\t'
+		for r in self.tfidfval:
+			r=str(r)
+			r=r.encode('ascii','ignore')
+			string+=r+'\t'
+		string+='\n'
+		return string
+	
+	def tfidfattstr(self):
+		string='newid\toldid\t'
 		for r in self.tfidfatt:
 			r=str(r)
 			r=r.encode('ascii','ignore')
 			string+=r+'\t'
 		string+='\n'
-		for r in self.tfidfval:
+		return string
+
+	def genattstr(self):
+		string='newid\toldid\tlewissplit\tcgisplit\tdate\ttopics\tplaces\t'\
+					 'people\torgs\texchanges\tcompanies\ttitle\tdateline\tnumOfWords\n'
+		return string
+
+	def genstr(self):
+		string=self.newid+'\t'+self.oldid+'\t'
+		for r in self.general:
 			r=str(r)
 			r=r.encode('ascii','ignore')
-			string+=r+'\t'
+			r=r.replace('\n','').replace('\t','').strip()
+			string+='"'+r+'"'+'\t'
+		string+=str(len(self.ntlk))
 		string+='\n'
 		return string
