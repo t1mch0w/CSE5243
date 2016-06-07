@@ -1,5 +1,5 @@
 all:
-	python -O vector.py data result 100
+	source test.sh
 
 clean:
 	rm *.pyo *.vc*

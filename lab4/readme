@@ -1,0 +1,33 @@
+Project 4
+Name: Fang Zhou
+
+1. Structure of the project
+Root
+|-jaccard.py	Jaccard similarity algorithm
+|-minhash.py	K-minhash algorithm
+|-mse.py			Mean squared error
+|-report.pdf	The report for assignment 4
+|-Makefile
+|-readme
+
+2. Set Python environment
+Please run the env script (env_bash.sh or env_tcsh.sh) before 
+you run the program. Use 'source env_bash.sh' or 'source env_bash.sh'
+to run it. It depends on the shell you are using.
+------------------------------------------------------------------------
+If there is something wrong in my environment, please let me know.
+I will fix it soon.
+------------------------------------------------------------------------
+
+3. How to run
+I prepare a Makefile for the grader. If you run 'make',
+it will run the program with the whole algs.
+It may take a long time on our deparment cluster.
+
+4. How to review
+You can use vim or other editors to open the output files.
+Each line shows the similarity of one pair of documents.
+The running time and MSE will be printed directly on the screen. 
+
+If you have any problems, please let me know.
+Email: zhou.1250@osu.edu

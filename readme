@@ -40,8 +40,7 @@ and general information, respectively.
 Note: I also prepare a Makefile for the grader. If you run 'make',
 it will run the program with the whole dataset and generate three
 vector files name result.vc1, result.vc2, resut.vc3.
-It may take 7-8 mins on our deparment cluster. I test it on my own
-machine, it only takes 70 secondes...
+It may take 2-3 mins on our deparment cluster.
 
 4. How to review
 You can use vim or other editors to open the output files.
