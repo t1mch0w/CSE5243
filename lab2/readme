@@ -1,0 +1,43 @@
+Project 1
+Name: Fang Zhou
+
+1. Structure of the project
+Root
+|-cleanr.py	Cleaner class. It's used to clean the data.
+|-parser.py	Parser class. It's used to parse the data.
+|-reuter.py	Reuter class. The Reuter class to hold a lot of info.
+|-vector.py	Main funciton.
+|-env_bash.sh	Environment script for bash
+|-env_tcsh.sh	Environment script for tcsh 
+|-kmeansA.py Kmeans clustering with manhattan distance
+|-kmeansB.py Kmeans clustering with cosine distance
+|-hclusterA.py Hierarchical clustering with manhattan distance and single linkage
+|-hclusterB.py Hierarchical clustering with manhattan distance and complete linkage
+|-hclusterC.py Hierarchical clustering with manhattan distance and single linkage
+|-hclusterD.py Hierarchical clustering with manhattan distance and complete linkage
+|-Makefile
+|-readme
+
+2. Set Python environment
+Please run the env script (env_bash.sh or env_tcsh.sh) before 
+you run the program. Use 'source env_bash.sh' or 'source env_bash.sh'
+to run it. It depends on the shell you are using.
+
+3. How to run
+I prepare a Makefile for the grader. If you run 'make',
+it will run the program with the whole clustering algs.
+It may take a long time on our deparment cluster.
+
+4. How to review
+You can use vim or other editors to open the output files.
+The first line in each output file should contain the attribute 
+names. So you can easily know there are how many attributes and
+what the meanings of them are.
+The other lines show the values of the feature vectors in the unit
+of document, which means one line represents one document in this
+file.
+If you do not want the attribute names, you can use awk, sed and any 
+commands you like to remove the first line.
+
+If you have any problems, please let me know.
+Email: zhou.1250@osu.edu
